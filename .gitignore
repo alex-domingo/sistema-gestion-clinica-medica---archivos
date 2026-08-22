@@ -1,1 +1,69 @@
-target/*
+# ---------------------------------------------------------------
+# Compilacion
+# ---------------------------------------------------------------
+target/
+build/
+*.class
+
+# ---------------------------------------------------------------
+# Datos generados en tiempo de ejecucion
+# Los archivos .dat son binarios de longitud fija: versionarlos
+# provoca conflictos irresolubles y expone datos de prueba.
+# ---------------------------------------------------------------
+datos/
+*.dat
+
+# Reportes exportados desde la aplicacion
+exportaciones/
+
+# ---------------------------------------------------------------
+# NetBeans
+# ---------------------------------------------------------------
+nbproject/private/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+
+# ---------------------------------------------------------------
+# IntelliJ IDEA
+# ---------------------------------------------------------------
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ---------------------------------------------------------------
+# Eclipse y VS Code
+# ---------------------------------------------------------------
+.classpath
+.project
+.settings/
+.vscode/
+bin/
+
+# ---------------------------------------------------------------
+# Maven
+# ---------------------------------------------------------------
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
+release.properties
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+# ---------------------------------------------------------------
+# Registros de errores de la JVM
+# ---------------------------------------------------------------
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# ---------------------------------------------------------------
+# Sistema operativo
+# ---------------------------------------------------------------
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
