@@ -1,9 +1,13 @@
 package com.archivos.sistemagestionclinicamedica.vista;
 
 import com.archivos.sistemagestionclinicamedica.excepcion.PersistenciaException;
+import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoEspecialidades;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoLogs;
+import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoMedicos;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoPacientes;
+import com.archivos.sistemagestionclinicamedica.servicio.EspecialidadServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.LogServicio;
+import com.archivos.sistemagestionclinicamedica.servicio.MedicoServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.PacienteServicio;
 import com.archivos.sistemagestionclinicamedica.util.RutasDatos;
 import com.archivos.sistemagestionclinicamedica.vista.estilo.Tema;
@@ -38,6 +42,8 @@ public class VentanaPrincipal extends JFrame {
 
     private final transient ArchivoLogs archivoLogs;
     private final transient ArchivoPacientes archivoPacientes;
+    private final transient ArchivoMedicos archivoMedicos;
+    private final transient ArchivoEspecialidades archivoEspecialidades;
 
     public VentanaPrincipal() throws PersistenciaException {
         setTitle("Sistema de Gestion de Clinica Medica");
@@ -57,9 +63,16 @@ public class VentanaPrincipal extends JFrame {
         // Abrir archivos y armar servicios.
         archivoLogs = new ArchivoLogs(RutasDatos.archivo(ArchivoLogs.NOMBRE_ARCHIVO));
         archivoPacientes = new ArchivoPacientes(RutasDatos.archivo(ArchivoPacientes.NOMBRE_ARCHIVO));
+        archivoMedicos = new ArchivoMedicos(RutasDatos.archivo(ArchivoMedicos.NOMBRE_ARCHIVO));
+        archivoEspecialidades = new ArchivoEspecialidades(
+                RutasDatos.archivo(ArchivoEspecialidades.NOMBRE_ARCHIVO));
 
         LogServicio logServicio = new LogServicio(archivoLogs);
         PacienteServicio pacienteServicio = new PacienteServicio(archivoPacientes, logServicio);
+        EspecialidadServicio especialidadServicio
+                = new EspecialidadServicio(archivoEspecialidades, logServicio);
+        MedicoServicio medicoServicio
+                = new MedicoServicio(archivoMedicos, especialidadServicio, logServicio);
 
         // Fondo general de la ventana.
         getContentPane().setBackground(Tema.colores().fondo);
@@ -67,10 +80,10 @@ public class VentanaPrincipal extends JFrame {
         // Encabezado con el nombre de la app.
         add(construirEncabezado(), BorderLayout.NORTH);
 
-        // Armar las pestanas. Por ahora solo Pacientes; las demas se agregan
-        // en las siguientes fases.
+        // Armar las pestanas. Se van agregando modulos en cada fase.
         JTabbedPane pestanas = new JTabbedPane();
         pestanas.addTab("Pacientes", new PanelPacientes(pacienteServicio));
+        pestanas.addTab("Medicos", new PanelMedicos(medicoServicio, especialidadServicio));
         pestanas.setBorder(BorderFactory.createEmptyBorder(
                 Tema.ESPACIO, Tema.ESPACIO, Tema.ESPACIO, Tema.ESPACIO));
 
@@ -130,6 +143,8 @@ public class VentanaPrincipal extends JFrame {
 
     private void cerrarArchivos() {
         try {
+            archivoEspecialidades.close();
+            archivoMedicos.close();
             archivoPacientes.close();
             archivoLogs.close();
         } catch (IOException e) {
