@@ -23,6 +23,10 @@ public final class ValidadorFormato {
     // Solo digitos.
     private static final Pattern SOLO_DIGITOS = Pattern.compile("^[0-9]+$");
 
+    // Hora en formato HH:mm de 24 horas (00:00 a 23:59).
+    private static final Pattern HORA_24
+            = Pattern.compile("^([01][0-9]|2[0-3]):[0-5][0-9]$");
+
     private ValidadorFormato() {
     }
 
@@ -47,5 +51,12 @@ public final class ValidadorFormato {
     // Dice si un texto esta vacio o es solo espacios (o null).
     public static boolean estaVacio(String texto) {
         return texto == null || texto.isBlank();
+    }
+
+    /**
+     * Verifica que el texto sea una hora valida en formato HH:mm (24 horas).
+     */
+    public static boolean horaValida(String texto) {
+        return texto != null && HORA_24.matcher(texto.trim()).matches();
     }
 }
