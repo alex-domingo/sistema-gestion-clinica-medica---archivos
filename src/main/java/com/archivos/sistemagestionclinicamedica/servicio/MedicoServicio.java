@@ -6,6 +6,7 @@ import com.archivos.sistemagestionclinicamedica.excepcion.ValidacionException;
 import com.archivos.sistemagestionclinicamedica.modelo.Medico;
 import com.archivos.sistemagestionclinicamedica.modelo.enums.Accion;
 import com.archivos.sistemagestionclinicamedica.modelo.enums.Modulo;
+import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoCitas;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoMedicos;
 import com.archivos.sistemagestionclinicamedica.util.ValidadorFormato;
 
@@ -33,12 +34,14 @@ public class MedicoServicio {
 
     private final ArchivoMedicos archivo;
     private final EspecialidadServicio especialidades;
+    private final ArchivoCitas archivoCitas;   // para verificar citas antes de borrar
     private final LogServicio log;
 
     public MedicoServicio(ArchivoMedicos archivo, EspecialidadServicio especialidades,
-            LogServicio log) {
+            ArchivoCitas archivoCitas, LogServicio log) {
         this.archivo = archivo;
         this.especialidades = especialidades;
+        this.archivoCitas = archivoCitas;
         this.log = log;
     }
 
@@ -72,10 +75,20 @@ public class MedicoServicio {
     /**
      * Activa o desactiva un medico. Es distinto de eliminarlo: el medico sigue
      * existiendo, solo cambia su estado.
+     *
+     * No se puede DESACTIVAR un medico que tiene citas programadas, porque esas
+     * citas quedarian apuntando a un medico marcado como no disponible. Activar
+     * en cambio siempre se permite: no genera ninguna inconsistencia.
      */
     public void cambiarEstado(UUID uuid, boolean activo)
-            throws RegistroNoEncontradoException, PersistenciaException {
+            throws ValidacionException, RegistroNoEncontradoException, PersistenciaException {
         Medico medico = buscarPorUuid(uuid);
+        if (!activo && archivoCitas.medicoTieneCitasProgramadas(uuid)) {
+            throw new ValidacionException(
+                    "No se puede desactivar al medico " + medico.getNombreCompleto()
+                    + " porque tiene citas programadas. "
+                    + "Cancele o atienda esas citas primero.");
+        }
         medico.setActivo(activo);
         archivo.modificar(medico);
         log.registrar(Modulo.MEDICOS, Accion.ACTUALIZACION,
@@ -86,9 +99,15 @@ public class MedicoServicio {
      * Elimina un medico (borrado logico).
      */
     public void eliminar(UUID uuid)
-            throws RegistroNoEncontradoException, PersistenciaException {
+            throws ValidacionException, RegistroNoEncontradoException, PersistenciaException {
         if (!archivo.existe(uuid)) {
             throw new RegistroNoEncontradoException("No existe el medico a eliminar.");
+        }
+        // No se puede borrar un medico que tiene citas programadas.
+        if (archivoCitas.medicoTieneCitasProgramadas(uuid)) {
+            throw new ValidacionException(
+                    "No se puede eliminar el medico porque tiene citas programadas. "
+                    + "Cancele o atienda esas citas primero.");
         }
         archivo.eliminar(uuid);
         log.registrar(Modulo.MEDICOS, Accion.ELIMINACION,
@@ -103,6 +122,14 @@ public class MedicoServicio {
         return archivo.buscarPorUuid(uuid)
                 .orElseThrow(() -> new RegistroNoEncontradoException(
                 "No existe un medico con ese UUID."));
+    }
+
+    /**
+     * Busca un medico y devuelve null si no existe (en vez de lanzar
+     * excepcion). Lo usa CitaServicio para validar de forma comoda.
+     */
+    public Medico buscarSiExiste(UUID uuid) throws PersistenciaException {
+        return archivo.buscarPorUuid(uuid).orElse(null);
     }
 
     /**

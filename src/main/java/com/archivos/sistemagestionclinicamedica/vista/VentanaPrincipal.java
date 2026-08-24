@@ -1,10 +1,12 @@
 package com.archivos.sistemagestionclinicamedica.vista;
 
 import com.archivos.sistemagestionclinicamedica.excepcion.PersistenciaException;
+import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoCitas;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoEspecialidades;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoLogs;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoMedicos;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoPacientes;
+import com.archivos.sistemagestionclinicamedica.servicio.CitaServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.EspecialidadServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.LogServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.MedicoServicio;
@@ -44,6 +46,7 @@ public class VentanaPrincipal extends JFrame {
     private final transient ArchivoPacientes archivoPacientes;
     private final transient ArchivoMedicos archivoMedicos;
     private final transient ArchivoEspecialidades archivoEspecialidades;
+    private final transient ArchivoCitas archivoCitas;
 
     public VentanaPrincipal() throws PersistenciaException {
         setTitle("Sistema de Gestion de Clinica Medica");
@@ -66,13 +69,19 @@ public class VentanaPrincipal extends JFrame {
         archivoMedicos = new ArchivoMedicos(RutasDatos.archivo(ArchivoMedicos.NOMBRE_ARCHIVO));
         archivoEspecialidades = new ArchivoEspecialidades(
                 RutasDatos.archivo(ArchivoEspecialidades.NOMBRE_ARCHIVO));
+        archivoCitas = new ArchivoCitas(RutasDatos.archivo(ArchivoCitas.NOMBRE_ARCHIVO));
 
         LogServicio logServicio = new LogServicio(archivoLogs);
-        PacienteServicio pacienteServicio = new PacienteServicio(archivoPacientes, logServicio);
+        // Los servicios de paciente y medico reciben archivoCitas para poder
+        // bloquear el borrado cuando hay citas programadas.
+        PacienteServicio pacienteServicio
+                = new PacienteServicio(archivoPacientes, archivoCitas, logServicio);
         EspecialidadServicio especialidadServicio
                 = new EspecialidadServicio(archivoEspecialidades, logServicio);
         MedicoServicio medicoServicio
-                = new MedicoServicio(archivoMedicos, especialidadServicio, logServicio);
+                = new MedicoServicio(archivoMedicos, especialidadServicio, archivoCitas, logServicio);
+        CitaServicio citaServicio
+                = new CitaServicio(archivoCitas, pacienteServicio, medicoServicio, logServicio);
 
         // Fondo general de la ventana.
         getContentPane().setBackground(Tema.colores().fondo);
@@ -84,6 +93,7 @@ public class VentanaPrincipal extends JFrame {
         JTabbedPane pestanas = new JTabbedPane();
         pestanas.addTab("Pacientes", new PanelPacientes(pacienteServicio));
         pestanas.addTab("Medicos", new PanelMedicos(medicoServicio, especialidadServicio));
+        pestanas.addTab("Citas", new PanelCitas(citaServicio, pacienteServicio, medicoServicio));
         pestanas.setBorder(BorderFactory.createEmptyBorder(
                 Tema.ESPACIO, Tema.ESPACIO, Tema.ESPACIO, Tema.ESPACIO));
 
@@ -143,6 +153,7 @@ public class VentanaPrincipal extends JFrame {
 
     private void cerrarArchivos() {
         try {
+            archivoCitas.close();
             archivoEspecialidades.close();
             archivoMedicos.close();
             archivoPacientes.close();
