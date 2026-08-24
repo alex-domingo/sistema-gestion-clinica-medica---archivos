@@ -7,6 +7,7 @@ import com.archivos.sistemagestionclinicamedica.excepcion.ValidacionException;
 import com.archivos.sistemagestionclinicamedica.modelo.Paciente;
 import com.archivos.sistemagestionclinicamedica.modelo.enums.Accion;
 import com.archivos.sistemagestionclinicamedica.modelo.enums.Modulo;
+import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoCitas;
 import com.archivos.sistemagestionclinicamedica.persistencia.ArchivoPacientes;
 import com.archivos.sistemagestionclinicamedica.util.ValidadorFormato;
 
@@ -29,10 +30,12 @@ import java.util.Locale;
 public class PacienteServicio {
 
     private final ArchivoPacientes archivo;
+    private final ArchivoCitas archivoCitas;   // para verificar citas antes de borrar
     private final LogServicio log;
 
-    public PacienteServicio(ArchivoPacientes archivo, LogServicio log) {
+    public PacienteServicio(ArchivoPacientes archivo, ArchivoCitas archivoCitas, LogServicio log) {
         this.archivo = archivo;
+        this.archivoCitas = archivoCitas;
         this.log = log;
     }
 
@@ -69,10 +72,17 @@ public class PacienteServicio {
      * Elimina un paciente por su identificacion.
      */
     public void eliminar(String identificacion)
-            throws RegistroNoEncontradoException, PersistenciaException {
+            throws ValidacionException, RegistroNoEncontradoException, PersistenciaException {
         if (!archivo.existe(identificacion)) {
             throw new RegistroNoEncontradoException(
                     "No existe un paciente con la identificacion " + identificacion);
+        }
+        // No se puede borrar un paciente que tiene citas programadas: quedarian
+        // citas apuntando a un paciente que ya no existe.
+        if (archivoCitas.pacienteTieneCitasProgramadas(identificacion)) {
+            throw new ValidacionException(
+                    "No se puede eliminar el paciente porque tiene citas programadas. "
+                    + "Cancele o atienda esas citas primero.");
         }
         archivo.eliminar(identificacion);
         log.registrar(Modulo.PACIENTES, Accion.ELIMINACION,
@@ -87,6 +97,14 @@ public class PacienteServicio {
         return archivo.buscarPorIdentificacion(identificacion)
                 .orElseThrow(() -> new RegistroNoEncontradoException(
                 "No existe un paciente con la identificacion " + identificacion));
+    }
+
+    /**
+     * Dice si existe un paciente con esa identificacion. Lo usa CitaServicio
+     * para validar sin tener que capturar una excepcion.
+     */
+    public boolean existe(String identificacion) {
+        return archivo.existe(identificacion);
     }
 
     /**
