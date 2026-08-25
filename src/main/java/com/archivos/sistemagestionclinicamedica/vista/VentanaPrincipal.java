@@ -11,6 +11,7 @@ import com.archivos.sistemagestionclinicamedica.servicio.EspecialidadServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.LogServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.MedicoServicio;
 import com.archivos.sistemagestionclinicamedica.servicio.PacienteServicio;
+import com.archivos.sistemagestionclinicamedica.servicio.ReporteServicio;
 import com.archivos.sistemagestionclinicamedica.util.RutasDatos;
 import com.archivos.sistemagestionclinicamedica.vista.estilo.Tema;
 
@@ -82,6 +83,8 @@ public class VentanaPrincipal extends JFrame {
                 = new MedicoServicio(archivoMedicos, especialidadServicio, archivoCitas, logServicio);
         CitaServicio citaServicio
                 = new CitaServicio(archivoCitas, pacienteServicio, medicoServicio, logServicio);
+        ReporteServicio reporteServicio
+                = new ReporteServicio(pacienteServicio, medicoServicio, citaServicio, logServicio);
 
         // Fondo general de la ventana.
         getContentPane().setBackground(Tema.colores().fondo);
@@ -94,6 +97,8 @@ public class VentanaPrincipal extends JFrame {
         pestanas.addTab("Pacientes", new PanelPacientes(pacienteServicio));
         pestanas.addTab("Medicos", new PanelMedicos(medicoServicio, especialidadServicio));
         pestanas.addTab("Citas", new PanelCitas(citaServicio, pacienteServicio, medicoServicio));
+        pestanas.addTab("Reportes", new PanelReportes(
+                reporteServicio, pacienteServicio, medicoServicio, especialidadServicio));
         pestanas.setBorder(BorderFactory.createEmptyBorder(
                 Tema.ESPACIO, Tema.ESPACIO, Tema.ESPACIO, Tema.ESPACIO));
 
