@@ -1,0 +1,269 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="84eHPLiOSWC6HKCusiYQ" name="Página-1">
+    <mxGraphModel dx="2575" dy="1438" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;classDiagram\n    class ArchivoBase~T~ {\n        &lt;&lt;abstract&gt;&gt;\n        #escribirDatos(T entidad, BufferRegistro buffer)* void\n        #leerDatos(BufferRegistro buffer)* T\n        #alIndexar(long posicion, T entidad) void\n        #insertar(T entidad) long\n        #actualizar(long posicion, T entidad) void\n        #eliminarLogico(long posicion) void\n        #leerPorPosicion(long posicion) Optional~T~\n        +listarTodos() List~T~\n        +recorrer(RecorridoRegistro~T~ accion) void\n        +contar() int\n        +tamanioRegistro() int\n        +close() void\n    }\n\n    class ArchivoPacientes {\n        -Map~String,Long~ indicePorIdentificacion\n        +agregar(Paciente p) void\n        +buscarPorIdentificacion(String id) Optional~Paciente~\n        +modificar(Paciente p) void\n        +eliminar(String id) void\n        +existe(String id) boolean\n    }\n\n    class ArchivoMedicos {\n        -Map~UUID,Long~ indicePorUuid\n        +agregar(Medico m) UUID\n        +buscarPorUuid(UUID uuid) Optional~Medico~\n        +modificar(Medico m) void\n        +eliminar(UUID uuid) void\n        +existe(UUID uuid) boolean\n    }\n\n    class ArchivoCitas {\n        -Map~UUID,Long~ indicePorUuid\n        +agregar(Cita c) UUID\n        +buscarPorUuid(UUID uuid) Optional~Cita~\n        +modificar(Cita c) void\n        +eliminar(UUID uuid) void\n        +listarPorPaciente(String dpi) List~Cita~\n        +listarPorMedico(UUID uuid) List~Cita~\n        +listarPorFecha(LocalDate f) List~Cita~\n        +listarPorEstado(EstadoCita e) List~Cita~\n        +pacienteTieneCitasProgramadas(String dpi) boolean\n        +medicoTieneCitasProgramadas(UUID uuid) boolean\n    }\n\n    class ArchivoEspecialidades {\n        -Map~String,Long~ indicePorNombre\n        +agregar(Especialidad e) void\n        +existe(String nombre) boolean\n        +cantidad() int\n    }\n\n    class ArchivoLogs {\n        +agregar(RegistroLog log) void\n    }\n\n    class BufferRegistro {\n        +escribirCadena(String v, int n) void\n        +leerCadena(int n) String\n        +escribirUUID(UUID v) void\n        +leerUUID() UUID\n        +escribirFecha(LocalDate v) void\n        +leerFecha() LocalDate\n        +escribirEnum(Enum v) void\n        +bytesDeCadena(int n)$ int\n    }\n\n    ArchivoBase &lt;|-- ArchivoPacientes\n    ArchivoBase &lt;|-- ArchivoMedicos\n    ArchivoBase &lt;|-- ArchivoCitas\n    ArchivoBase &lt;|-- ArchivoEspecialidades\n    ArchivoBase &lt;|-- ArchivoLogs\n    ArchivoBase ..&gt; BufferRegistro : usa para serializar&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="IGacFlejpf5vNVxrj-cR-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
+            <mxGeometry as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="«abstract»&lt;br&gt;&lt;b&gt;ArchivoBase&amp;lt;T&amp;gt;&lt;/b&gt;" mermaidId="n:ArchivoBase" mermaidBaseStyle="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=72;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="«abstract»&lt;br&gt;&lt;b&gt;ArchivoBase&amp;lt;T&amp;gt;&lt;/b&gt;" id="IGacFlejpf5vNVxrj-cR-2">
+          <mxCell parent="IGacFlejpf5vNVxrj-cR-1" style="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=72;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" vertex="1">
+            <mxGeometry height="404" width="452" x="1237" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-3" parent="IGacFlejpf5vNVxrj-cR-2" style="line;strokeWidth=1;fillColor=none;spacingLeft=3;spacingRight=3;rotatable=0;points=[];strokeColor=inherit;" vertex="1">
+          <mxGeometry height="20" width="452" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-4" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="#escribirDatos(T entidad, BufferRegistro buffer)* void" vertex="1">
+          <mxGeometry height="24" width="452" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-5" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="#leerDatos(BufferRegistro buffer)* T" vertex="1">
+          <mxGeometry height="24" width="452" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-6" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="#alIndexar(long posicion, T entidad) void" vertex="1">
+          <mxGeometry height="24" width="452" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-7" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="#insertar(T entidad) long" vertex="1">
+          <mxGeometry height="24" width="452" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-8" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="#actualizar(long posicion, T entidad) void" vertex="1">
+          <mxGeometry height="24" width="452" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-9" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="#eliminarLogico(long posicion) void" vertex="1">
+          <mxGeometry height="24" width="452" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-10" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="#leerPorPosicion(long posicion) Optional&lt;T&gt;" vertex="1">
+          <mxGeometry height="24" width="452" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-11" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+listarTodos() List&lt;T&gt;" vertex="1">
+          <mxGeometry height="24" width="452" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-12" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+recorrer(RecorridoRegistro&lt;T&gt; accion) void" vertex="1">
+          <mxGeometry height="24" width="452" y="296" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-13" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+contar() int" vertex="1">
+          <mxGeometry height="24" width="452" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-14" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+tamanioRegistro() int" vertex="1">
+          <mxGeometry height="24" width="452" y="344" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-15" parent="IGacFlejpf5vNVxrj-cR-2" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+close() void" vertex="1">
+          <mxGeometry height="24" width="452" y="368" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b&gt;ArchivoPacientes&lt;/b&gt;" mermaidId="n:ArchivoPacientes" mermaidBaseStyle="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="&lt;b&gt;ArchivoPacientes&lt;/b&gt;" id="IGacFlejpf5vNVxrj-cR-16">
+          <mxCell parent="IGacFlejpf5vNVxrj-cR-1" style="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" vertex="1">
+            <mxGeometry height="236" width="477" x="30" y="561" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-17" parent="IGacFlejpf5vNVxrj-cR-16" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="-Map&lt;String,Long&gt; indicePorIdentificacion" vertex="1">
+          <mxGeometry height="24" width="477" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-18" parent="IGacFlejpf5vNVxrj-cR-16" style="line;strokeWidth=1;fillColor=none;spacingLeft=3;spacingRight=3;rotatable=0;points=[];strokeColor=inherit;" vertex="1">
+          <mxGeometry height="20" width="477" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-19" parent="IGacFlejpf5vNVxrj-cR-16" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+agregar(Paciente p) void" vertex="1">
+          <mxGeometry height="24" width="477" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-20" parent="IGacFlejpf5vNVxrj-cR-16" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+buscarPorIdentificacion(String id) Optional&lt;Paciente&gt;" vertex="1">
+          <mxGeometry height="24" width="477" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-21" parent="IGacFlejpf5vNVxrj-cR-16" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+modificar(Paciente p) void" vertex="1">
+          <mxGeometry height="24" width="477" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-22" parent="IGacFlejpf5vNVxrj-cR-16" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+eliminar(String id) void" vertex="1">
+          <mxGeometry height="24" width="477" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-23" parent="IGacFlejpf5vNVxrj-cR-16" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+existe(String id) boolean" vertex="1">
+          <mxGeometry height="24" width="477" y="200" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b&gt;ArchivoMedicos&lt;/b&gt;" mermaidId="n:ArchivoMedicos" mermaidBaseStyle="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="&lt;b&gt;ArchivoMedicos&lt;/b&gt;" id="IGacFlejpf5vNVxrj-cR-24">
+          <mxCell parent="IGacFlejpf5vNVxrj-cR-1" style="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" vertex="1">
+            <mxGeometry height="236" width="405" x="557" y="561" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-25" parent="IGacFlejpf5vNVxrj-cR-24" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="-Map&lt;UUID,Long&gt; indicePorUuid" vertex="1">
+          <mxGeometry height="24" width="405" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-26" parent="IGacFlejpf5vNVxrj-cR-24" style="line;strokeWidth=1;fillColor=none;spacingLeft=3;spacingRight=3;rotatable=0;points=[];strokeColor=inherit;" vertex="1">
+          <mxGeometry height="20" width="405" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-27" parent="IGacFlejpf5vNVxrj-cR-24" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+agregar(Medico m) UUID" vertex="1">
+          <mxGeometry height="24" width="405" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-28" parent="IGacFlejpf5vNVxrj-cR-24" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+buscarPorUuid(UUID uuid) Optional&lt;Medico&gt;" vertex="1">
+          <mxGeometry height="24" width="405" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-29" parent="IGacFlejpf5vNVxrj-cR-24" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+modificar(Medico m) void" vertex="1">
+          <mxGeometry height="24" width="405" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-30" parent="IGacFlejpf5vNVxrj-cR-24" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+eliminar(UUID uuid) void" vertex="1">
+          <mxGeometry height="24" width="405" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-31" parent="IGacFlejpf5vNVxrj-cR-24" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+existe(UUID uuid) boolean" vertex="1">
+          <mxGeometry height="24" width="405" y="200" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b&gt;ArchivoCitas&lt;/b&gt;" mermaidId="n:ArchivoCitas" mermaidBaseStyle="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="&lt;b&gt;ArchivoCitas&lt;/b&gt;" id="IGacFlejpf5vNVxrj-cR-32">
+          <mxCell parent="IGacFlejpf5vNVxrj-cR-1" style="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" vertex="1">
+            <mxGeometry height="356" width="448" x="1012" y="501" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-33" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="-Map&lt;UUID,Long&gt; indicePorUuid" vertex="1">
+          <mxGeometry height="24" width="448" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-34" parent="IGacFlejpf5vNVxrj-cR-32" style="line;strokeWidth=1;fillColor=none;spacingLeft=3;spacingRight=3;rotatable=0;points=[];strokeColor=inherit;" vertex="1">
+          <mxGeometry height="20" width="448" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-35" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+agregar(Cita c) UUID" vertex="1">
+          <mxGeometry height="24" width="448" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-36" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+buscarPorUuid(UUID uuid) Optional&lt;Cita&gt;" vertex="1">
+          <mxGeometry height="24" width="448" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-37" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+modificar(Cita c) void" vertex="1">
+          <mxGeometry height="24" width="448" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-38" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+eliminar(UUID uuid) void" vertex="1">
+          <mxGeometry height="24" width="448" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-39" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+listarPorPaciente(String dpi) List&lt;Cita&gt;" vertex="1">
+          <mxGeometry height="24" width="448" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-40" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+listarPorMedico(UUID uuid) List&lt;Cita&gt;" vertex="1">
+          <mxGeometry height="24" width="448" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-41" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+listarPorFecha(LocalDate f) List&lt;Cita&gt;" vertex="1">
+          <mxGeometry height="24" width="448" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-42" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+listarPorEstado(EstadoCita e) List&lt;Cita&gt;" vertex="1">
+          <mxGeometry height="24" width="448" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-43" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+pacienteTieneCitasProgramadas(String dpi) boolean" vertex="1">
+          <mxGeometry height="24" width="448" y="296" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-44" parent="IGacFlejpf5vNVxrj-cR-32" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+medicoTieneCitasProgramadas(UUID uuid) boolean" vertex="1">
+          <mxGeometry height="24" width="448" y="320" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b&gt;ArchivoEspecialidades&lt;/b&gt;" mermaidId="n:ArchivoEspecialidades" mermaidBaseStyle="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="&lt;b&gt;ArchivoEspecialidades&lt;/b&gt;" id="IGacFlejpf5vNVxrj-cR-45">
+          <mxCell parent="IGacFlejpf5vNVxrj-cR-1" style="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" vertex="1">
+            <mxGeometry height="188" width="362" x="1509" y="585" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-46" parent="IGacFlejpf5vNVxrj-cR-45" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="-Map&lt;String,Long&gt; indicePorNombre" vertex="1">
+          <mxGeometry height="24" width="362" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-47" parent="IGacFlejpf5vNVxrj-cR-45" style="line;strokeWidth=1;fillColor=none;spacingLeft=3;spacingRight=3;rotatable=0;points=[];strokeColor=inherit;" vertex="1">
+          <mxGeometry height="20" width="362" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-48" parent="IGacFlejpf5vNVxrj-cR-45" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+agregar(Especialidad e) void" vertex="1">
+          <mxGeometry height="24" width="362" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-49" parent="IGacFlejpf5vNVxrj-cR-45" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+existe(String nombre) boolean" vertex="1">
+          <mxGeometry height="24" width="362" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-50" parent="IGacFlejpf5vNVxrj-cR-45" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+cantidad() int" vertex="1">
+          <mxGeometry height="24" width="362" y="152" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b&gt;ArchivoLogs&lt;/b&gt;" mermaidId="n:ArchivoLogs" mermaidBaseStyle="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="&lt;b&gt;ArchivoLogs&lt;/b&gt;" id="IGacFlejpf5vNVxrj-cR-51">
+          <mxCell parent="IGacFlejpf5vNVxrj-cR-1" style="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" vertex="1">
+            <mxGeometry height="116" width="284" x="1921" y="624" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-52" parent="IGacFlejpf5vNVxrj-cR-51" style="line;strokeWidth=1;fillColor=none;spacingLeft=3;spacingRight=3;rotatable=0;points=[];strokeColor=inherit;" vertex="1">
+          <mxGeometry height="20" width="284" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-53" parent="IGacFlejpf5vNVxrj-cR-51" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+agregar(RegistroLog log) void" vertex="1">
+          <mxGeometry height="24" width="284" y="80" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b&gt;BufferRegistro&lt;/b&gt;" mermaidId="n:BufferRegistro" mermaidBaseStyle="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" mermaidBaseValue="&lt;b&gt;BufferRegistro&lt;/b&gt;" id="IGacFlejpf5vNVxrj-cR-54">
+          <mxCell parent="IGacFlejpf5vNVxrj-cR-1" style="swimlane;html=1;fontStyle=0;fontSize=16;align=center;verticalAlign=middle;horizontal=1;childLayout=stackLayout;startSize=48;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginTop=12;marginBottom=12;stackSpacing=0;swimlaneFillColor=light-dark(#ECECFF,#1f2020);whiteSpace=wrap;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;" vertex="1">
+            <mxGeometry height="284" width="332" x="2255" y="540" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-55" parent="IGacFlejpf5vNVxrj-cR-54" style="line;strokeWidth=1;fillColor=none;spacingLeft=3;spacingRight=3;rotatable=0;points=[];strokeColor=inherit;" vertex="1">
+          <mxGeometry height="20" width="332" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-56" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+escribirCadena(String v, int n) void" vertex="1">
+          <mxGeometry height="24" width="332" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-57" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+leerCadena(int n) String" vertex="1">
+          <mxGeometry height="24" width="332" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-58" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+escribirUUID(UUID v) void" vertex="1">
+          <mxGeometry height="24" width="332" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-59" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+leerUUID() UUID" vertex="1">
+          <mxGeometry height="24" width="332" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-60" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+escribirFecha(LocalDate v) void" vertex="1">
+          <mxGeometry height="24" width="332" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-61" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+leerFecha() LocalDate" vertex="1">
+          <mxGeometry height="24" width="332" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-62" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+escribirEnum(Enum v) void" vertex="1">
+          <mxGeometry height="24" width="332" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="IGacFlejpf5vNVxrj-cR-63" parent="IGacFlejpf5vNVxrj-cR-54" style="text;fontSize=16;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);" value="+bytesDeCadena(int n)$ int" vertex="1">
+          <mxGeometry height="24" width="332" y="248" as="geometry" />
+        </mxCell>
+        <UserObject label="" mermaidId="e:ArchivoBase-&gt;ArchivoPacientes#0" mermaidBaseStyle="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0;exitY=0.61;entryX=0.5;entryY=0;" mermaidBaseValue="" id="IGacFlejpf5vNVxrj-cR-64">
+          <mxCell edge="1" parent="IGacFlejpf5vNVxrj-cR-1" source="IGacFlejpf5vNVxrj-cR-2" style="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0;exitY=0.61;entryX=0.5;entryY=0;rounded=0;" target="IGacFlejpf5vNVxrj-cR-16">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="268" y="467" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:ArchivoBase-&gt;ArchivoMedicos#0" mermaidBaseStyle="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0;exitY=0.69;entryX=0.5;entryY=0;" mermaidBaseValue="" id="IGacFlejpf5vNVxrj-cR-65">
+          <mxCell edge="1" parent="IGacFlejpf5vNVxrj-cR-1" source="IGacFlejpf5vNVxrj-cR-2" style="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0;exitY=0.69;entryX=0.5;entryY=0;rounded=0;" target="IGacFlejpf5vNVxrj-cR-24">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="759" y="467" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:ArchivoBase-&gt;ArchivoCitas#0" mermaidBaseStyle="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0.07;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="IGacFlejpf5vNVxrj-cR-66">
+          <mxCell edge="1" parent="IGacFlejpf5vNVxrj-cR-1" source="IGacFlejpf5vNVxrj-cR-2" style="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0.07;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="IGacFlejpf5vNVxrj-cR-32">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1235" y="467" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:ArchivoBase-&gt;ArchivoEspecialidades#0" mermaidBaseStyle="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0.93;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="IGacFlejpf5vNVxrj-cR-67">
+          <mxCell edge="1" parent="IGacFlejpf5vNVxrj-cR-1" source="IGacFlejpf5vNVxrj-cR-2" style="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=0.93;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="IGacFlejpf5vNVxrj-cR-45">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1690" y="467" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:ArchivoBase-&gt;ArchivoLogs#0" mermaidBaseStyle="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.72;entryX=0.5;entryY=0;" mermaidBaseValue="" id="IGacFlejpf5vNVxrj-cR-68">
+          <mxCell edge="1" parent="IGacFlejpf5vNVxrj-cR-1" source="IGacFlejpf5vNVxrj-cR-2" style="curved=1;startArrow=block;startSize=14;startFill=0;endArrow=none;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.72;entryX=0.5;entryY=0;rounded=0;" target="IGacFlejpf5vNVxrj-cR-51">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="2063" y="467" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="usa para serializar" mermaidId="e:ArchivoBase-&gt;BufferRegistro#0" mermaidBaseStyle="curved=1;dashed=1;startArrow=none;endArrow=classic;endSize=9;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#ECECFF,#1f2020);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.64;entryX=0.5;entryY=0;" mermaidBaseValue="usa para serializar" id="IGacFlejpf5vNVxrj-cR-69">
+          <mxCell edge="1" parent="IGacFlejpf5vNVxrj-cR-1" source="IGacFlejpf5vNVxrj-cR-2" style="curved=1;dashed=1;startArrow=none;endArrow=classic;endSize=9;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#ECECFF,#1f2020);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.64;entryX=0.5;entryY=0;fixDash=1;rounded=0;" target="IGacFlejpf5vNVxrj-cR-54">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="2421" y="467" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
